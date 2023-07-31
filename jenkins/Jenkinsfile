@@ -2,22 +2,22 @@
     stages {
         stage('Build') {
             steps {
-                echo 'mvn -B -DskipTests clean package'
+                bat 'mvn -B -DskipTests clean package'
             }
         }
         stage('Test') {
             steps {
-                echo 'mvn test'
+                bat 'mvn test'
             }
             post {
                 always {
-                    junit 'target/surefire-reports/*.xml'
+                    bat 'target/surefire-reports/*.xml'
                 }
             }
         }
         stage('Deliver') {
             steps {
-                echo './jenkins/scripts/deliver.sh'
+                bat './jenkins/scripts/deliver.sh'
             }
         }
     }
