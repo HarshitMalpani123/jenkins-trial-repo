@@ -1,24 +1,25 @@
+pipeline {
     agent any
     stages {
         stage('Build') {
             steps {
-                bat 'mvn -B -DskipTests clean package'
+                sh 'mvn -B -DskipTests clean package'
             }
         }
         stage('Test') {
             steps {
-                bat 'mvn test'
+                sh 'mvn test'
             }
             post {
                 always {
-                    bat 'target/surefire-reports/*.xml'
+                    junit 'target/surefire-reports/*.xml'
                 }
             }
         }
         stage('Deliver') {
             steps {
-                bat './jenkins/scripts/deliver.bat'
+                sh './jenkins/scripts/deliver.sh'
             }
         }
     }
-
+}
